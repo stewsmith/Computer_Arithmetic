@@ -12,6 +12,8 @@ void main(int argc, char*argv[]){
     char * secForm;
     int negFirst = 0;
     int negSec = 0;
+    int firstFinal = 0;
+    int secFinal = 0;
 
     if (argc != 5){
       printf("Argc is off---should be 5");
@@ -40,15 +42,21 @@ void main(int argc, char*argv[]){
    switch(firstForm[0])
    {
      case 'd': printf("decimal format\n");
+               /*no conversion necessary */
                firstForm++;
+               firstFinal = atoi(firstForm);
+               printf("%d\n", firstFinal);
                break;
      case 'o': printf("octal format\n");
+               /*octal to decimal */
                firstForm++;
                break;
      case 'b': printf("binary format\n");
+               /*binary to decimal */
                firstForm++;
                break;
      case 'x': printf("hexadecimal format\n");
+               /*hexadecimal to decimal */
                firstForm++;
                break;
      default: printf("not a valid conversion base option");
@@ -58,15 +66,22 @@ void main(int argc, char*argv[]){
     switch(secForm[0])
    {
      case 'd': printf("decimal format\n");
+               /*no conversion necessary */
+               secFinal = atoi(secForm);
                secForm++;
+               if(addition)
+                 add(firstFinal, secFinal);
                break;
      case 'o': printf("octal format\n");
+               /*octal to decimal */
                secForm++;
                break;
      case 'b': printf("binary format\n");
+               /*binary to decimal */
                secForm++;
                break;
      case 'x': printf("hexadecimal format\n");
+               /*hexadecimal to decimal */
                secForm++;
                break;
      default: printf("not a valid conversion base option");
@@ -76,4 +91,8 @@ void main(int argc, char*argv[]){
   
 
     printf("argument 1: %s \nargument 2: %s\n", firstForm, secForm );
+}
+
+int add(int a, int b){
+  return (a + b);
 }
