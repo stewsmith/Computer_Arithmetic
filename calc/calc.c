@@ -32,6 +32,45 @@ char* reverse(char s[])
       return s;
 }
 
+void binAdd(char sum[], char s1[], char s2[]){
+  int carry = 0;
+  char* rev1 = reverse(s1);
+  char* rev2 = reverse(s2);
+  int i;
+  for(i=0; i< strlen(s1); i++){
+    if(s1[i] == '1' && s2[i] == '1'){
+      if(carry){
+        carry = 1;
+        strcat(sum, "1");
+      }
+      else{
+        carry = 1;
+        strcat(sum, "0");
+      }
+    }else{
+      if((s1[i] == '0' && s2[i] == '1') || (s1[i] == '1' && s2[i] == '0')){
+        if(carry){
+          carry = 1;
+          strcat(sum, "0");
+        }else{
+          carry = 0;
+          strcat(sum, "1");
+        }
+      }else{
+        if(s1[i] == '0' && s2[i] == '0'){
+          if (carry){
+            carry = 0;
+            strcat(sum, "1");
+          }else{
+            carry = 0;
+            strcat(sum, "0");
+        }
+      } 
+    }
+  }
+}
+}
+
 /*Converts Octal to Binary*/
 void o2b(char * bin, char raw[]){
   int len =strlen(raw);
@@ -201,15 +240,36 @@ void main(int argc, char*argv[]){
   
   printf("firstBin %s\n", firstBin);
   printf("secBin %s\n", secBin);
-  printf("len of firstBin %d\n", (strlen(firstBin)));
-  printf("len of secondBin %d\n", (strlen(secBin)));
 
   int diff = abs(strlen(firstBin) - strlen(secBin));
   char shorter[diff];
-  strcpy(shorter, "0");
-  int k;
-  for(k=0; k<diff; k++){
-    strcat(shorter, "0");
+  char* shorterBin;
+  char* longerBin;
+
+  if(diff > 0){
+    if(strlen(firstBin) > strlen(secBin)){
+      longerBin = firstBin;
+      shorterBin = secBin;
+    }
+    else{
+      longerBin = secBin;
+      shorterBin = firstBin;
+    }
+    strcpy(shorter, "0");
+    int k;
+    /* add zeros to the front of the shorter binary string 
+    * so they can be compared */
+    for(k=0; k<diff-1; k++){
+      strcat(shorter, "0");
+    }
+    strcat(shorter, shorterBin);
   }
-  printf("shorter: %s\n", shorter);
+    
+  printf("longerBin %s\n", longerBin);
+  printf("shorter : %s\n", shorter);
+
+  char * sum = (char*) malloc(2*(strlen(shorter)));
+  binAdd(sum, longerBin, shorter);
+  printf("sum: %s\n", sum);
+
 }
