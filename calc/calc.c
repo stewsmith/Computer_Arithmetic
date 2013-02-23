@@ -69,6 +69,8 @@ void binAdd(char sum[], char s1[], char s2[]){
     }
   }
 }
+if(carry)
+  strcat(sum, "1");
 }
 
 /*Converts Octal to Binary*/
@@ -242,7 +244,7 @@ void main(int argc, char*argv[]){
   printf("secBin %s\n", secBin);
 
   int diff = abs(strlen(firstBin) - strlen(secBin));
-  char shorter[diff];
+  char* shorter;
   char* shorterBin;
   char* longerBin;
 
@@ -264,12 +266,17 @@ void main(int argc, char*argv[]){
     }
     strcat(shorter, shorterBin);
   }
+  else{
+    longerBin = firstBin;
+    shorter = secBin;
+  }
     
   printf("longerBin %s\n", longerBin);
   printf("shorter : %s\n", shorter);
 
   char * sum = (char*) malloc(2*(strlen(shorter)));
   binAdd(sum, longerBin, shorter);
+  sum = reverse(sum);
   printf("sum: %s\n", sum);
 
 }
