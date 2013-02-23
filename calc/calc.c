@@ -1,16 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-/*Converts Decimal to Binary*/
+/*Converts Decimal to Binary
 void d2b(int num){
   int mod = 0;
+  int len =strlen(raw);
+  char str[len*3];
+  strcpy(str, "");
+
   while (num != 0){
     mod = num%2;
-    printf("%d", mod);
+    strcat(str, mod);
     num = num/2;
   }
     printf("\n");
 }
+*/
 
 char* reverse(char s[])
 {
@@ -27,85 +33,80 @@ char* reverse(char s[])
 }
 
 /*Converts Octal to Binary*/
-char* o2b(char raw[]){
+void o2b(char * bin, char raw[]){
   int len =strlen(raw);
   int i=0;
-  char str[len*3];
+  strcpy(bin, "");
 
   while(i < len){
     switch(raw[i]){
-      case '0': strcat(str, "000");
+      case '0': strcat(bin, "000");
                 break;
-      case '1': strcat(str, "001");
+      case '1': strcat(bin, "001");
                 break;
-      case '2': strcat(str, "010");
+      case '2': strcat(bin, "010");
                 break;
-      case '3': strcat(str, "011");
+      case '3': strcat(bin, "011");
                 break;
-      case '4': strcat(str, "100");
+      case '4': strcat(bin, "100");
                 break;
-      case '5': strcat(str, "101");
+      case '5': strcat(bin, "101");
                 break;
-      case '6': strcat(str, "110");
+      case '6': strcat(bin, "110");
                 break;
-      case '7': strcat(str ,"111");
+      case '7': strcat(bin ,"111");
                 break;
       default: fprintf(stderr, "not octal");
     }
     i++;
   }
-    printf("str: %s\n", reverse(str));
-    return str;
+    printf("str: %s\n", reverse(bin));
 }
 
 /*Converts Hexadecimal to Binary*/
-char* x2b(char raw[]){
+void x2b(char* bin, char raw[]){
   int len =strlen(raw);
   int i=0;
-  char str[len*4];
-  strcpy(str, "");
-  printf("before: %s\n", str);
+  strcpy(bin, "");
 
   while(i < len){
     switch(raw[i]){
-      case '0': strcat(str, "0000");
+      case '0': strcat(bin, "0000");
                 break;
-      case '1': strcat(str, "0001");
+      case '1': strcat(bin, "0001");
                 break;
-      case '2': strcat(str, "0010");
+      case '2': strcat(bin, "0010");
                 break;
-      case '3': strcat(str, "0011");
+      case '3': strcat(bin, "0011");
                 break;
-      case '4': strcat(str, "0100");
+      case '4': strcat(bin, "0100");
                 break;
-      case '5': strcat(str, "0101");
+      case '5': strcat(bin, "0101");
                 break;
-      case '6': strcat(str, "0110");
+      case '6': strcat(bin, "0110");
                 break;
-      case '7': strcat(str, "0111");
+      case '7': strcat(bin, "0111");
                 break;
-      case '8': strcat(str,"1000");
+      case '8': strcat(bin,"1000");
                 break;
-      case '9': strcat(str, "1001");
+      case '9': strcat(bin, "1001");
                 break;
-      case 'A': strcat(str, "1010");
+      case 'A': strcat(bin, "1010");
                 break;
-      case 'B': strcat(str, "1011");
+      case 'B': strcat(bin, "1011");
                 break;
-      case 'C': strcat(str, "1100");
+      case 'C': strcat(bin, "1100");
                 break;
-      case 'D': strcat(str, "1101");
+      case 'D': strcat(bin, "1101");
                 break;
-      case 'E': strcat(str, "1110");
+      case 'E': strcat(bin, "1110");
                 break;
-      case 'F': strcat(str, "1111");
+      case 'F': strcat(bin, "1111");
                 break;
       default: fprintf(stderr, "not hex");
     }
     i++;
   }
-    printf("str: %s\n", str);
-    return str;
 }
 void main(int argc, char*argv[]){
     
@@ -119,6 +120,8 @@ void main(int argc, char*argv[]){
     int negSec = 0;
     int firstFinal = 0;
     int secFinal = 0;
+    char * firstBin;
+    char * secBin;
 
     /*check arguments*/
     if (argc != 5){
@@ -147,25 +150,24 @@ void main(int argc, char*argv[]){
 
    switch(firstForm[0])
    {
-     case 'd': printf("decimal format\n");
-               /*decimal to binary*/
+     case 'd': /*decimal to binary
                firstForm++;
                firstFinal = atoi(firstForm);
                d2b(firstFinal);
-               break;
-     case 'o': printf("octal format\n");
-               /*octal to decimal */
+               break; */
+     case 'o': /*octal to decimal */
                firstForm++;
-               o2b(firstForm);
+               firstBin = (char*) malloc(3*(strlen(firstForm)));
+               o2b(firstBin, firstForm);
                break;
-     case 'b': printf("binary format\n");
-               /*no conversion necessary */
+     case 'b': /*no conversion necessary */
                firstForm++;
+               firstBin = firstForm;
                break;
-     case 'x': printf("hexadecimal format\n");
-               /*hexadecimal to decimal */
+     case 'x': /*hexadecimal to decimal */
                firstForm++;
-               x2b(firstForm);
+               firstBin = (char*) malloc(4*(strlen(firstForm)));
+               x2b(firstBin, firstForm);
                break;
      default: fprintf(stderr, "not a valid conversion base option\n");
               return;
@@ -174,26 +176,40 @@ void main(int argc, char*argv[]){
     switch(secForm[0])
    {
      case 'd': printf("decimal format\n");
-               /*decimal to binary*/
+               /*decimal to binary
                secForm++;
                secFinal = atoi(secForm);
                d2b(secFinal);
-               break;
-     case 'o': printf("octal format\n");
-               /*octal to decimal */
+               break;*/
+     case 'o': /*octal to decimal */
                secForm++;
-               o2b(secForm);
+               secBin = (char*) malloc(3*(strlen(secForm)));
+               o2b(secBin, secForm);
                break;
-     case 'b': printf("binary format\n");
-               /*no conversion necessary */
+     case 'b': /*no conversion necessary */
                secForm++;
+               secBin = secForm;
                break;
-     case 'x': printf("hexadecimal format\n");
-               /*hexadecimal to decimal */
+     case 'x': /*hexadecimal to decimal */
                secForm++;
-               x2b(secForm);
+               secBin = (char*) malloc(4*(strlen(secForm)));
+               x2b(secBin, secForm);
                break;
      default: fprintf(stderr, "not a valid conversion base option\n");
               return;
    }
+  
+  printf("firstBin %s\n", firstBin);
+  printf("secBin %s\n", secBin);
+  printf("len of firstBin %d\n", (strlen(firstBin)));
+  printf("len of secondBin %d\n", (strlen(secBin)));
+
+  int diff = abs(strlen(firstBin) - strlen(secBin));
+  char shorter[diff];
+  strcpy(shorter, "0");
+  int k;
+  for(k=0; k<diff; k++){
+    strcat(shorter, "0");
+  }
+  printf("shorter: %s\n", shorter);
 }
