@@ -12,7 +12,7 @@ void d2b(int num){
     printf("\n");
 }
 
-void reverse(char s[])
+char* reverse(char s[])
 {
       int length = strlen(s) ;
       int c, i, j;
@@ -23,13 +23,14 @@ void reverse(char s[])
          s[i] = s[j];
          s[j] = c;
       }
+      return s;
 }
 
 /*Converts Octal to Binary*/
-char[] o2b(char raw[]){
+char* o2b(char raw[]){
   int len =strlen(raw);
   int i=0;
-  char str[50];
+  char str[len*3];
 
   while(i < len){
     switch(raw[i]){
@@ -53,15 +54,15 @@ char[] o2b(char raw[]){
     }
     i++;
   }
-    printf("str: %s\n", str);
+    printf("str: %s\n", reverse(str));
     return str;
 }
 
 /*Converts Hexadecimal to Binary*/
-char[] x2b(char raw[]){
+char* x2b(char raw[]){
   int len =strlen(raw);
   int i=0;
-  char str[50];
+  char str[len*4];
 
   while(i < len){
     switch(raw[i]){
@@ -101,7 +102,7 @@ char[] x2b(char raw[]){
     }
     i++;
   }
-    printf("str: %s\n", str);
+    printf("str: %s\n", reverse(str));
     return str;
 }
 void main(int argc, char*argv[]){
@@ -164,8 +165,8 @@ void main(int argc, char*argv[]){
                firstForm++;
                x2b(firstForm);
                break;
-     default: fprintf(stderr, "not a valid conversion base option");
-              break;
+     default: fprintf(stderr, "not a valid conversion base option\n");
+              return;
    }
 
     switch(secForm[0])
@@ -190,7 +191,7 @@ void main(int argc, char*argv[]){
                secForm++;
                x2b(secForm);
                break;
-     default: fprintf(stderr, "not a valid conversion base option");
-              break;
+     default: fprintf(stderr, "not a valid conversion base option\n");
+              return;
    }
 }
