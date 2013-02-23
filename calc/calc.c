@@ -63,6 +63,8 @@ char* x2b(char raw[]){
   int len =strlen(raw);
   int i=0;
   char str[len*4];
+  strcpy(str, "");
+  printf("before: %s\n", str);
 
   while(i < len){
     switch(raw[i]){
@@ -102,7 +104,7 @@ char* x2b(char raw[]){
     }
     i++;
   }
-    printf("str: %s\n", reverse(str));
+    printf("str: %s\n", str);
     return str;
 }
 void main(int argc, char*argv[]){
