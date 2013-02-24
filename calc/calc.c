@@ -6,12 +6,16 @@
 void d2b(char* bin, int num){
   int mod = 0;
   strcpy(bin, "");
+  char b[100];
 
   while (num != 0){
     mod = num%2;
-    sprintf(bin,"%d", mod); 
+    /*char* modChar = (char*)(((int)'0')+mod);
+    strcat(bin, modChar); */
+    sprintf(bin, "%d", mod);
     num = num/2;
   }
+  printf("d2b: %s\n", bin);
 }
 
 /*takes a string and reverses it */
