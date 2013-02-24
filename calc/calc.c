@@ -2,22 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*Converts Decimal to Binary */
-void d2b(char* bin, int num){
-  int mod = 0;
-  strcpy(bin, "");
-  char b[100];
-
-  while (num != 0){
-    mod = num%2;
-    /*char* modChar = (char*)(((int)'0')+mod);
-    strcat(bin, modChar); */
-    sprintf(bin, "%d", mod);
-    num = num/2;
-  }
-  printf("d2b: %s\n", bin);
-}
-
 /*takes a string and reverses it */
 char* reverse(char s[])
 {
@@ -32,6 +16,24 @@ char* reverse(char s[])
       }
       return s;
 }
+
+/*Converts Decimal to Binary */
+void d2b(char* bin, int num){
+  int mod = 0;
+  strcpy(bin, "");
+
+  while (num != 0){
+    mod = num%2;
+    if(mod){
+      strcat(bin, "1");
+    }else{
+      strcat(bin, "0");
+    }
+    num = num/2;
+  }
+  reverse(bin);
+}
+
 
 /*takes two strings of binary form and adds them*/
 void binAdd(char sum[], char s1[], char s2[]){
@@ -129,7 +131,7 @@ void x2b(char* bin, char raw[]){
                 break;
       case '7': strcat(bin, "0111");
                 break;
-      case '8': strcat(bin,"1000");
+      case '8': strcat(bin, "1000");
                 break;
       case '9': strcat(bin, "1001");
                 break;
@@ -199,6 +201,8 @@ void main(int argc, char*argv[]){
                firstFinal = atoi(firstForm);
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                d2b(firstBin, firstFinal);
+               /*firstBin = reverse(firstBin);*/
+               printf("firstBin %s\n", firstBin);
                break;
      case 'o': /*octal to decimal */
                firstForm++;
@@ -223,8 +227,9 @@ void main(int argc, char*argv[]){
      case 'd': /*decimal to binary*/
                secForm++;
                secFinal = atoi(secForm);
-               firstBin = (char*) malloc(3*(strlen(firstForm)));
-               d2b(firstBin, firstFinal);
+               secBin = (char*) malloc(3*(strlen(secForm)));
+               d2b(secBin, firstFinal);
+               printf("secBin %s\n", secBin);
                break;
      case 'o': /*octal to decimal */
                secForm++;
