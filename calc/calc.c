@@ -5,15 +5,13 @@
 /*Converts Decimal to Binary */
 void d2b(char* bin, int num){
   int mod = 0;
-  int len = strlen(raw);
   strcpy(bin, "");
 
   while (num != 0){
     mod = num%2;
-    strcat(str, mod);
+    sprintf(bin,"%d", mod); 
     num = num/2;
   }
-    printf("\n");
 }
 
 /*takes a string and reverses it */
@@ -192,12 +190,12 @@ void main(int argc, char*argv[]){
 
    switch(firstForm[0])
    {
-     case 'd': /*decimal to binary
+     case 'd': /*decimal to binary*/
                firstForm++;
                firstFinal = atoi(firstForm);
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                d2b(firstBin, firstFinal);
-               break; */
+               break;
      case 'o': /*octal to decimal */
                firstForm++;
                firstBin = (char*) malloc(3*(strlen(firstForm)));
@@ -218,13 +216,12 @@ void main(int argc, char*argv[]){
 
     switch(secForm[0])
    {
-     case 'd': printf("decimal format\n");
-               /*decimal to binary
+     case 'd': /*decimal to binary*/
                secForm++;
                secFinal = atoi(secForm);
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                d2b(firstBin, firstFinal);
-               break;*/
+               break;
      case 'o': /*octal to decimal */
                secForm++;
                secBin = (char*) malloc(3*(strlen(secForm)));
