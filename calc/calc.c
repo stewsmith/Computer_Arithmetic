@@ -107,6 +107,20 @@ void o2b(char * bin, char raw[]){
   }
 }
 
+void b2o(char * ans, char raw[]){
+  raw = reverse(raw);
+  int len = strlen(raw);
+  int i;
+  strcpy(ans, "");
+
+  if(len%3 != 0){
+    for(i=0; i<(3-(len%3)); i++){
+      strcat(raw, "0");
+    }
+    printf("raw %s\n", raw);
+  }
+}
+
 /*Converts Hexadecimal to Binary*/
 void x2b(char* bin, char raw[]){
   int len =strlen(raw);
@@ -174,11 +188,18 @@ void main(int argc, char*argv[]){
       fprintf(stderr, "Argc is off---should be 5");
       return;
     }
-    
+   
+   /*Check for addition and subtraction*/ 
     if(strcmp(argv[1], "+") == 0)
       addition = 1;
-    if(strcmp(argv[1], "-") == 0)
-      subtraction = 1;
+    else{
+      if(strcmp(argv[1], "-") == 0)
+        subtraction = 1;
+      else{
+        fprintf(stderr, "Only addition and subtraction are possible");
+        return;
+      }
+    }
     
     firstArg = argv[2];
     secArg = argv[3];
@@ -201,8 +222,6 @@ void main(int argc, char*argv[]){
                firstFinal = atoi(firstForm);
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                d2b(firstBin, firstFinal);
-               /*firstBin = reverse(firstBin);*/
-               printf("firstBin %s\n", firstBin);
                break;
      case 'o': /*octal to decimal */
                firstForm++;
@@ -229,7 +248,6 @@ void main(int argc, char*argv[]){
                secFinal = atoi(secForm);
                secBin = (char*) malloc(3*(strlen(secForm)));
                d2b(secBin, firstFinal);
-               printf("secBin %s\n", secBin);
                break;
      case 'o': /*octal to decimal */
                secForm++;
@@ -255,6 +273,8 @@ void main(int argc, char*argv[]){
   char* shorterBin;
   char* longerBin;
 
+  /* if strings are different lengths,
+   *  we must do some adjusting*/
   if(diff > 0){
     if(strlen(firstBin) > strlen(secBin)){
       longerBin = firstBin;
@@ -283,9 +303,13 @@ void main(int argc, char*argv[]){
   printf("longerBin %s\n", longerBin);
   printf("shorter : %s\n", shorter);
 
-  char * sum = (char*) malloc(2*(strlen(shorter)));
-  binAdd(sum, longerBin, shorter);
-  sum = reverse(sum);
-  printf("sum: %s\n", sum);
+  if (addition){
+    char * sum = (char*) malloc(2*(strlen(shorter)));
+    binAdd(sum, longerBin, shorter);
+    sum = reverse(sum);
+    printf("sum: %s\n", sum);
+    char * ans = (char*) malloc(2*(strlen(shorter)));
+    b2o(ans, sum);
+  }
 
 }
