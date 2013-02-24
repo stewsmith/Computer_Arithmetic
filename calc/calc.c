@@ -2,12 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*Converts Decimal to Binary
-void d2b(int num){
+/*Converts Decimal to Binary */
+void d2b(char* bin, int num){
   int mod = 0;
-  int len =strlen(raw);
-  char str[len*3];
-  strcpy(str, "");
+  int len = strlen(raw);
+  strcpy(bin, "");
 
   while (num != 0){
     mod = num%2;
@@ -16,8 +15,8 @@ void d2b(int num){
   }
     printf("\n");
 }
-*/
 
+/*takes a string and reverses it */
 char* reverse(char s[])
 {
       int length = strlen(s) ;
@@ -32,6 +31,7 @@ char* reverse(char s[])
       return s;
 }
 
+/*takes two strings of binary form and adds them*/
 void binAdd(char sum[], char s1[], char s2[]){
   int carry = 0;
   char* rev1 = reverse(s1);
@@ -101,7 +101,6 @@ void o2b(char * bin, char raw[]){
     }
     i++;
   }
-    printf("str: %s\n", reverse(bin));
 }
 
 /*Converts Hexadecimal to Binary*/
@@ -149,6 +148,8 @@ void x2b(char* bin, char raw[]){
     i++;
   }
 }
+
+
 void main(int argc, char*argv[]){
     
     int addition = 0;
@@ -194,7 +195,8 @@ void main(int argc, char*argv[]){
      case 'd': /*decimal to binary
                firstForm++;
                firstFinal = atoi(firstForm);
-               d2b(firstFinal);
+               firstBin = (char*) malloc(3*(strlen(firstForm)));
+               d2b(firstBin, firstFinal);
                break; */
      case 'o': /*octal to decimal */
                firstForm++;
@@ -220,7 +222,8 @@ void main(int argc, char*argv[]){
                /*decimal to binary
                secForm++;
                secFinal = atoi(secForm);
-               d2b(secFinal);
+               firstBin = (char*) malloc(3*(strlen(firstForm)));
+               d2b(firstBin, firstFinal);
                break;*/
      case 'o': /*octal to decimal */
                secForm++;
@@ -239,11 +242,9 @@ void main(int argc, char*argv[]){
      default: fprintf(stderr, "not a valid conversion base option\n");
               return;
    }
-  
-  printf("firstBin %s\n", firstBin);
-  printf("secBin %s\n", secBin);
-
-  int diff = abs(strlen(firstBin) - strlen(secBin));
+   
+  int diff;
+  diff = abs(strlen(firstBin) - strlen(secBin));
   char* shorter;
   char* shorterBin;
   char* longerBin;
@@ -252,15 +253,17 @@ void main(int argc, char*argv[]){
     if(strlen(firstBin) > strlen(secBin)){
       longerBin = firstBin;
       shorterBin = secBin;
+      shorter = (char*) malloc(strlen(shorterBin));
     }
     else{
       longerBin = secBin;
       shorterBin = firstBin;
+      shorter = (char*) malloc(strlen(shorterBin));
     }
-    strcpy(shorter, "0");
-    int k;
     /* add zeros to the front of the shorter binary string 
     * so they can be compared */
+    strcpy(shorter, "0");
+    int k;
     for(k=0; k<diff-1; k++){
       strcat(shorter, "0");
     }
