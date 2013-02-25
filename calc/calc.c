@@ -222,72 +222,42 @@ void b2x(char * ans, char raw[]){
   printf("raw:::%s:::\n", raw);
   while(j<len){
     char subbuff[4];
-    strcpy(subbuff, "");
     memcpy(subbuff, &raw[j], 4);
     printf("subbuff:::%s:::\n", subbuff);
-    if(strcmp(subbuff, "0000") == 0)
+    if(strcmp(subbuff, "0000") == 0) {
       strcat(ans, "0");
-    else{
-      if(strcmp(subbuff, "0001") == 0)
-        strcat(ans, "1");
-      else{
-        if(strcmp(subbuff, "0010") == 0)
-          strcat(ans, "2");
-        else{
-          if(strcmp(subbuff, "0011") == 0)
+    } else if(strcmp(subbuff, "0001") == 0) {
+            strcat(ans, "1");
+    } else if(strcmp(subbuff, "0010") == 0) {
+            strcat(ans, "2");
+    } else if(strcmp(subbuff, "0011") == 0){
             strcat(ans, "3");
-          else{
-            if(strcmp(subbuff, "0100") == 0)
-              strcat(ans, "4");
-            else{
-              if(strcmp(subbuff, "0101") == 0)
-                strcat(ans, "5");
-              else{
-                if(strcmp(subbuff, "0110") == 0)
-                  strcat(ans, "6");
-                else{
-                  if(strcmp(subbuff, "0111") == 0)
-                    strcat(ans, "7");
-                  else{
-                    if(strcmp(subbuff, "1000") == 0)
-                      strcat(ans, "8");
-                    else{
-                      if(strcmp(subbuff, "1001") == 0)
-                        strcat(ans, "9");
-                      else{
-                        if(strcmp(subbuff, "1010") == 0)
-                          strcat(ans, "A");
-                        else{
-                          if(strcmp(subbuff, "1011") == 0)
-                            strcat(ans, "B");
-                          else{
-                            if(strcmp(subbuff, "1100") == 0)
-                              strcat(ans, "C");
-                            else{
-                              if(strcmp(subbuff, "1101") == 0)
-                                 strcat(ans, "D");
-                              else{
-                                if(strcmp(subbuff, "1110") == 0)
-                                  strcat(ans, "E");
-                                 else{
-                                   if(strcmp(subbuff, "1111") == 0)
-                                     strcat(ans, "F");
-                                   else printf("failure\n");
-                                 }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    } else if(strcmp(subbuff, "0100") == 0){
+            strcat(ans, "4");
+    } else if(strcmp(subbuff, "0101") == 0){
+            strcat(ans, "5");
+    } else if(strcmp(subbuff, "0110") == 0){
+            strcat(ans, "6");
+    } else if(strcmp(subbuff, "0111") == 0){
+            strcat(ans, "7");
+    } else if(strcmp(subbuff, "1000") == 0){
+            strcat(ans, "8");
+    } else if(strcmp(subbuff, "1001") == 0){
+            strcat(ans, "9");
+    } else if(strcmp(subbuff, "1010") == 0){
+            strcat(ans, "A");
+    } else if(strcmp(subbuff, "1011") == 0){
+            strcat(ans, "B");
+    } else if(strcmp(subbuff, "1100") == 0){
+            strcat(ans, "C");
+    } else if(strcmp(subbuff, "1101") == 0){
+            strcat(ans, "D");
+    } else if(strcmp(subbuff, "1110") == 0){
+            strcat(ans, "E");
+    } else if(strcmp(subbuff, "1111") == 0){
+            strcat(ans, "F");
+    } else printf("failure\n");
+
     j+=4;
   }
   printf("ans: %s\n", ans);
