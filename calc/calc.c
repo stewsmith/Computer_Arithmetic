@@ -125,34 +125,21 @@ void b2o(char * ans, char raw[]){
     char subbuff[3];
     memcpy(subbuff, &raw[j], 3);
     if(strcmp(subbuff, "000") == 0)
-      strcat(ans, "0");
-    else{
-      if(strcmp(subbuff, "001") == 0)
-        strcat(ans, "1");
-      else{
-        if(strcmp(subbuff, "010") == 0)
+          strcat(ans, "0");
+    else if(strcmp(subbuff, "001") == 0){
+          strcat(ans, "1");
+    } else if(strcmp(subbuff, "010") == 0){
           strcat(ans, "2");
-        else{
-          if(strcmp(subbuff, "011") == 0)
-            strcat(ans, "3");
-          else{
-            if(strcmp(subbuff, "100") == 0)
-              strcat(ans, "4");
-            else{
-              if(strcmp(subbuff, "101") == 0)
-                strcat(ans, "5");
-              else{
-                if(strcmp(subbuff, "110") == 0)
-                  strcat(ans, "6");
-                else{
-                  if(strcmp(subbuff, "111") == 0)
-                    strcat(ans, "7");
-                }
-              }  
-            }
-          }
-        }
-      }
+    } else if(strcmp(subbuff, "011") == 0){
+          strcat(ans, "3");
+    } else if(strcmp(subbuff, "100") == 0){
+          strcat(ans, "4");
+    } else if(strcmp(subbuff, "101") == 0){
+          strcat(ans, "5");
+    } else if(strcmp(subbuff, "110") == 0){
+          strcat(ans, "6");
+    } else if(strcmp(subbuff, "111") == 0){
+          strcat(ans, "7");
     }
     j+=3;
   }
@@ -221,9 +208,11 @@ void b2x(char * ans, char raw[]){
   raw = reverse(raw);
   printf("raw:::%s:::\n", raw);
   while(j<len){
-    char subbuff[4];
+    char subbuff[5];
     memcpy(subbuff, &raw[j], 4);
+    subbuff[4] = '\0';
     printf("subbuff:::%s:::\n", subbuff);
+    int k;
     if(strcmp(subbuff, "0000") == 0) {
       strcat(ans, "0");
     } else if(strcmp(subbuff, "0001") == 0) {
@@ -256,8 +245,9 @@ void b2x(char * ans, char raw[]){
             strcat(ans, "E");
     } else if(strcmp(subbuff, "1111") == 0){
             strcat(ans, "F");
-    } else printf("failure\n");
-
+    } else {
+      printf("failure\n");
+    }
     j+=4;
   }
   printf("ans: %s\n", ans);
