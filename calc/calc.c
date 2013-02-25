@@ -107,19 +107,58 @@ void o2b(char * bin, char raw[]){
   }
 }
 
+/*converts binary to octal */
 void b2o(char * ans, char raw[]){
   raw = reverse(raw);
   int len = strlen(raw);
   int i;
+  int j =0;
   strcpy(ans, "");
 
   if(len%3 != 0){
     for(i=0; i<(3-(len%3)); i++){
       strcat(raw, "0");
     }
-    printf("raw %s\n", raw);
   }
+  raw = reverse(raw);
+  while(j<len){
+    char subbuff[3];
+    memcpy(subbuff, &raw[j], 3);
+    if(strcmp(subbuff, "000") == 0)
+      strcat(ans, "0");
+    else{
+      if(strcmp(subbuff, "001") == 0)
+        strcat(ans, "1");
+      else{
+        if(strcmp(subbuff, "010") == 0)
+          strcat(ans, "2");
+        else{
+          if(strcmp(subbuff, "011") == 0)
+            strcat(ans, "3");
+          else{
+            if(strcmp(subbuff, "100") == 0)
+              strcat(ans, "4");
+            else{
+              if(strcmp(subbuff, "101") == 0)
+                strcat(ans, "5");
+              else{
+                if(strcmp(subbuff, "110") == 0)
+                  strcat(ans, "6");
+                else{
+                  if(strcmp(subbuff, "111") == 0)
+                    strcat(ans, "7");
+                }
+              }  
+            }
+          }
+        }
+      }
+    }
+    j+=3;
+  }
+  printf("ans: %s\n", ans);
 }
+
 
 /*Converts Hexadecimal to Binary*/
 void x2b(char* bin, char raw[]){
@@ -166,6 +205,95 @@ void x2b(char* bin, char raw[]){
     i++;
   }
 }
+
+void b2x(char * ans, char raw[]){
+  raw = reverse(raw);
+  int len = strlen(raw);
+  int i;
+  int j =0;
+  strcpy(ans, "");
+
+  if(len%4 != 0){
+    for(i=0; i<(4-(len%4)); i++){
+      strcat(raw, "0");
+    }
+  }
+  raw = reverse(raw);
+  printf("raw:::%s:::\n", raw);
+  while(j<len){
+    char subbuff[4];
+    strcpy(subbuff, "");
+    memcpy(subbuff, &raw[j], 4);
+    printf("subbuff:::%s:::\n", subbuff);
+    if(strcmp(subbuff, "0000") == 0)
+      strcat(ans, "0");
+    else{
+      if(strcmp(subbuff, "0001") == 0)
+        strcat(ans, "1");
+      else{
+        if(strcmp(subbuff, "0010") == 0)
+          strcat(ans, "2");
+        else{
+          if(strcmp(subbuff, "0011") == 0)
+            strcat(ans, "3");
+          else{
+            if(strcmp(subbuff, "0100") == 0)
+              strcat(ans, "4");
+            else{
+              if(strcmp(subbuff, "0101") == 0)
+                strcat(ans, "5");
+              else{
+                if(strcmp(subbuff, "0110") == 0)
+                  strcat(ans, "6");
+                else{
+                  if(strcmp(subbuff, "0111") == 0)
+                    strcat(ans, "7");
+                  else{
+                    if(strcmp(subbuff, "1000") == 0)
+                      strcat(ans, "8");
+                    else{
+                      if(strcmp(subbuff, "1001") == 0)
+                        strcat(ans, "9");
+                      else{
+                        if(strcmp(subbuff, "1010") == 0)
+                          strcat(ans, "A");
+                        else{
+                          if(strcmp(subbuff, "1011") == 0)
+                            strcat(ans, "B");
+                          else{
+                            if(strcmp(subbuff, "1100") == 0)
+                              strcat(ans, "C");
+                            else{
+                              if(strcmp(subbuff, "1101") == 0)
+                                 strcat(ans, "D");
+                              else{
+                                if(strcmp(subbuff, "1110") == 0)
+                                  strcat(ans, "E");
+                                 else{
+                                   if(strcmp(subbuff, "1111") == 0)
+                                     strcat(ans, "F");
+                                   else printf("failure\n");
+                                 }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    j+=4;
+  }
+  printf("ans: %s\n", ans);
+}
+
+
 
 
 void main(int argc, char*argv[]){
@@ -247,7 +375,7 @@ void main(int argc, char*argv[]){
                secForm++;
                secFinal = atoi(secForm);
                secBin = (char*) malloc(3*(strlen(secForm)));
-               d2b(secBin, firstFinal);
+               d2b(secBin, secFinal);
                break;
      case 'o': /*octal to decimal */
                secForm++;
@@ -300,16 +428,28 @@ void main(int argc, char*argv[]){
     shorter = secBin;
   }
     
-  printf("longerBin %s\n", longerBin);
-  printf("shorter : %s\n", shorter);
+  char * sum = (char*) malloc(2*(strlen(shorter)));
+  char * ans = (char*) malloc(2*(strlen(shorter)));
 
   if (addition){
-    char * sum = (char*) malloc(2*(strlen(shorter)));
     binAdd(sum, longerBin, shorter);
     sum = reverse(sum);
-    printf("sum: %s\n", sum);
-    char * ans = (char*) malloc(2*(strlen(shorter)));
-    b2o(ans, sum);
+    printf("binSum: %s\n", sum);
+  }
+  char output = *argv[4];
+
+  switch (output){
+    case 'd': /*binary to decimal*/
+              break;
+    case 'o': /*binary to octal*/
+              b2o(ans, sum);
+              break;
+    case 'x': /*binary to hexadecimal*/
+              b2x(ans, sum);
+              break;
+    case 'b': /*no conversion necessary*/
+              break;
+    default: fprintf(stderr, "not a valid conversion output");
   }
 
 }
