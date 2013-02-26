@@ -77,6 +77,31 @@ if(carry)
   strcat(sum, "1");
 }
 
+/*takes two binary strings and does subtraction*/
+void binSub(char sum[], char b[], char s[]){
+  char* rev1 = reverse(b);
+  char* rev2 = reverse(s);
+  int i;
+  for(i=0; i< strlen(b); i++){
+    if(b[i] == '0' && s[i] == '0'){  /* 0 - 0 */
+      strcat(sum, "0");
+    }else if(b[i] == '1' && s[i] == '1'){  /* 1 - 1 */
+      strcat(sum, "0");
+    }else if(b[i] == '1' && s[i] == '0'){  /* 1 - 0 */
+      strcat(sum, "1");
+    }else if(b[i] == '0' && s[i] == '1'){ /* 0 - 1 (hard case) */
+      int k = i;
+      while(b[k] != '1'){
+        b[k] = '1';
+        k++;
+      }
+      b[k] = '0';
+      strcat(sum, "1");
+    }
+  }
+  sum = reverse(sum);
+}
+
 /*Converts Octal to Binary*/
 void o2b(char * bin, char raw[]){
   int len =strlen(raw);
@@ -206,12 +231,10 @@ void b2x(char * ans, char raw[]){
     }
   }
   raw = reverse(raw);
-  printf("raw:::%s:::\n", raw);
   while(j<len){
     char subbuff[5];
     memcpy(subbuff, &raw[j], 4);
     subbuff[4] = '\0';
-    printf("subbuff:::%s:::\n", subbuff);
     int k;
     if(strcmp(subbuff, "0000") == 0) {
       strcat(ans, "0");
@@ -396,10 +419,15 @@ void main(int argc, char*argv[]){
     sum = reverse(sum);
     printf("binSum: %s\n", sum);
   }
-  char output = *argv[4];
+  if (subtraction){
+    binSub(sum, longerBin, shorter);
+    printf("Subtraction sum: %s\n", sum); 
+  }
 
+  char output = *argv[4];
   switch (output){
     case 'd': /*binary to decimal*/
+              printf("not done yet");
               break;
     case 'o': /*binary to octal*/
               b2o(ans, sum);
