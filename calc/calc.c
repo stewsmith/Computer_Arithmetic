@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 /*takes a string and reverses it */
 char* reverse(char s[])
@@ -31,9 +32,24 @@ void d2b(char* bin, int num){
     }
     num = num/2;
   }
+  strcat(bin, "\0");
   reverse(bin);
+  printf("bin: %s\n", bin);
 }
 
+/*Conversts Binary to Decimal*/
+int b2d(char bin[]){
+  bin = reverse(bin);
+  int ans = 0;
+  int i;
+  for(i=0; i<strlen(bin); i++){
+    if(bin[i] == '1'){
+      ans += pow(2,i);
+    }
+  }
+  bin = reverse(bin);
+  return ans;
+}
 
 /*takes two strings of binary form and adds them*/
 void binAdd(char sum[], char s1[], char s2[]){
@@ -218,6 +234,8 @@ void x2b(char* bin, char raw[]){
   }
 }
 
+
+/* Converts Binary to Hexadecimal */
 void b2x(char * ans, char raw[]){
   raw = reverse(raw);
   int len = strlen(raw);
@@ -277,8 +295,7 @@ void b2x(char * ans, char raw[]){
 }
 
 
-
-
+/*Main Method */
 void main(int argc, char*argv[]){
     
     int addition = 0;
@@ -311,12 +328,13 @@ void main(int argc, char*argv[]){
         return;
       }
     }
-    
+
     firstArg = argv[2];
     secArg = argv[3];
-    firstForm =  firstArg;   
+    firstForm =  firstArg;
     secForm = secArg;
 
+    /*check for negatives*/
     if(firstArg[0] == '-'){
       negFirst = 1;
       firstForm+=1;
@@ -334,7 +352,7 @@ void main(int argc, char*argv[]){
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                d2b(firstBin, firstFinal);
                break;
-     case 'o': /*octal to decimal */
+     case 'o': /*octal to binary */
                firstForm++;
                firstBin = (char*) malloc(3*(strlen(firstForm)));
                o2b(firstBin, firstForm);
@@ -343,7 +361,7 @@ void main(int argc, char*argv[]){
                firstForm++;
                firstBin = firstForm;
                break;
-     case 'x': /*hexadecimal to decimal */
+     case 'x': /*hexadecimal to binary */
                firstForm++;
                firstBin = (char*) malloc(4*(strlen(firstForm)));
                x2b(firstBin, firstForm);
@@ -360,7 +378,7 @@ void main(int argc, char*argv[]){
                secBin = (char*) malloc(3*(strlen(secForm)));
                d2b(secBin, secFinal);
                break;
-     case 'o': /*octal to decimal */
+     case 'o': /*octal to binary */
                secForm++;
                secBin = (char*) malloc(3*(strlen(secForm)));
                o2b(secBin, secForm);
@@ -369,7 +387,7 @@ void main(int argc, char*argv[]){
                secForm++;
                secBin = secForm;
                break;
-     case 'x': /*hexadecimal to decimal */
+     case 'x': /*hexadecimal to binary */
                secForm++;
                secBin = (char*) malloc(4*(strlen(secForm)));
                x2b(secBin, secForm);
@@ -378,14 +396,14 @@ void main(int argc, char*argv[]){
               return;
    }
    
+/*
   int diff;
   diff = abs(strlen(firstBin) - strlen(secBin));
   char* shorter;
   char* shorterBin;
   char* longerBin;
-
-  /* if strings are different lengths,
-   *  we must do some adjusting*/
+  * if strings are different lengths,
+   *  we must do some adjusting*
   if(diff > 0){
     if(strlen(firstBin) > strlen(secBin)){
       longerBin = firstBin;
@@ -397,8 +415,8 @@ void main(int argc, char*argv[]){
       shorterBin = firstBin;
       shorter = (char*) malloc(strlen(shorterBin));
     }
-    /* add zeros to the front of the shorter binary string 
-    * so they can be compared */
+    * add zeros to the front of the shorter binary string 
+    * so they can be compared *
     strcpy(shorter, "0");
     int k;
     for(k=0; k<diff-1; k++){
@@ -423,21 +441,56 @@ void main(int argc, char*argv[]){
     binSub(sum, longerBin, shorter);
     printf("Subtraction sum: %s\n", sum); 
   }
+*/
 
+  /*decimal aritmatic*/
+  int decAns = 0;
+  if (addition){
+    if(negFirst){
+      decAns += -1*b2d(firstBin);
+    }else{
+      decAns += b2d(firstBin);
+    }
+    if(negSec){
+      decAns += -1*b2d(secBin);
+    }else{
+      decAns += b2d(secBin);
+    }
+  }else{
+  if (subtraction){
+    if(negFirst){
+      int addme = -1*b2d(firstBin);
+      decAns = decAns + addme;
+      
+    }else{
+      decAns += b2d(firstBin);
+    }
+    if(negSec){
+      int addme = -1*b2d(secBin);
+      decAns = decAns - addme;
+    }else{
+      decAns -= b2d(secBin);
+    }
+  }
+  }
+  
+  printf("decAns: %d\n", decAns);
+
+/*
   char output = *argv[4];
   switch (output){
-    case 'd': /*binary to decimal*/
-              printf("not done yet");
+    case 'd': *binary to decimal*
+              printf("Answer: %d\n", b2d(sum));
               break;
-    case 'o': /*binary to octal*/
+    case 'o': *binary to octal*
               b2o(ans, sum);
               break;
-    case 'x': /*binary to hexadecimal*/
+    case 'x': *binary to hexadecimal*
               b2x(ans, sum);
               break;
-    case 'b': /*no conversion necessary*/
+    case 'b': *no conversion necessary*
               break;
     default: fprintf(stderr, "not a valid conversion output");
   }
-
+*/
 }
