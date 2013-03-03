@@ -34,7 +34,6 @@ void d2b(char* bin, int num){
   }
   strcat(bin, "\0");
   reverse(bin);
-  printf("bin: %s\n", bin);
 }
 
 /*Conversts Binary to Decimal*/
@@ -300,6 +299,7 @@ void main(int argc, char*argv[]){
     
     int addition = 0;
     int subtraction = 0;
+    int mult = 0;
     char * firstArg;
     char * secArg;
     char * firstForm;
@@ -313,20 +313,20 @@ void main(int argc, char*argv[]){
 
     /*check arguments*/
     if (argc != 5){
-      fprintf(stderr, "Argc is off---should be 5");
+      fprintf(stderr, "Argc is off---should be 5\n");
       return;
     }
    
    /*Check for addition and subtraction*/ 
-    if(strcmp(argv[1], "+") == 0)
-      addition = 1;
-    else{
-      if(strcmp(argv[1], "-") == 0)
-        subtraction = 1;
-      else{
-        fprintf(stderr, "Only addition and subtraction are possible");
-        return;
-      }
+    char sign = *argv[1];
+    switch (sign){
+      case '+': addition = 1;
+                break;
+      case '-': subtraction = 1;
+                break;
+      case '*': mult = 1;
+                break;
+      default: fprintf(stderr, "Only addition, subtraction and multiplication allowed\n");
     }
 
     firstArg = argv[2];
@@ -428,9 +428,6 @@ void main(int argc, char*argv[]){
     longerBin = firstBin;
     shorter = secBin;
   }
-    
-  char * sum = (char*) malloc(2*(strlen(shorter)));
-  char * ans = (char*) malloc(2*(strlen(shorter)));
 
   if (addition){
     binAdd(sum, longerBin, shorter);
@@ -471,26 +468,35 @@ void main(int argc, char*argv[]){
     }else{
       decAns -= b2d(secBin);
     }
+  }else{
+    if (mult){
+     printf("need to complete multiplication"); 
+    }
   }
   }
-  
-  printf("decAns: %d\n", decAns);
-
-/*
+/*convert to final output form*/
+  char * ans = (char*) malloc(2*(strlen(firstBin)));
+  char * temp = (char*) malloc(2*(strlen(firstBin)));
   char output = *argv[4];
   switch (output){
-    case 'd': *binary to decimal*
-              printf("Answer: %d\n", b2d(sum));
+    case 'd': /*no conversion necessary*/
+              printf("Answer: %d\n", decAns);
               break;
-    case 'o': *binary to octal*
-              b2o(ans, sum);
+    case 'o': /*binary to octal*/
+              d2b(temp, decAns);
+              b2o(ans, temp);
+              printf("Answer: %s\n", ans);
               break;
-    case 'x': *binary to hexadecimal*
-              b2x(ans, sum);
+    case 'x': /*binary to hexadecimal*/
+              d2b(temp, decAns);
+              b2x(ans, temp);
+              printf("Answer: %s\n", ans);
               break;
-    case 'b': *no conversion necessary*
+    case 'b': /*decimal to binary*/
+              d2b(ans, decAns);
+              printf("Answer: %s\n", ans);
               break;
     default: fprintf(stderr, "not a valid conversion output");
   }
-*/
+
 }
